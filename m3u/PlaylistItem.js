@@ -30,6 +30,9 @@ PlaylistItem.prototype.toString = function toString() {
       '#EXTINF:' + [this.get('duration').toFixed(4), this.get('title')].join(',')
     );
   }
+  if (this.get('group') != null) {
+    output.push('#EXTGRP:' + this.get('group'));
+  }
   if (this.get('byteRange') != null) {
     output.push('#EXT-X-BYTERANGE:' + this.get('byteRange'));
   }

@@ -85,10 +85,14 @@ m3uParser.prototype['EXTINF'] = function parseInf(data) {
 
 m3uParser.prototype['EXT-X-DISCONTINUITY'] = function parseInf() {
   this.playlistDiscontinuity = true;
-}
+};
 
 m3uParser.prototype['EXT-X-BYTERANGE'] = function parseByteRange(data) {
   this.currentItem.set('byteRange', data);
+};
+
+m3uParser.prototype['EXTGRP'] = function parseGroup(data) {
+  this.currentItem.set('group', data);
 };
 
 m3uParser.prototype['EXT-X-STREAM-INF'] = function(data) {
@@ -107,7 +111,7 @@ m3uParser.prototype['EXT-X-MEDIA'] = function(data) {
 
 m3uParser.prototype.parseAttributes = function parseAttributes(data) {
   data = data.split(NON_QUOTED_COMMA);
-  var self = this;
+
   return data.map(function(attribute) {
     var keyValue = attribute.split(/=(.+)/).map(function(str) {
       return str.trim();

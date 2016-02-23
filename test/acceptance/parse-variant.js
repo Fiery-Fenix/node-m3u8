@@ -63,8 +63,8 @@ describe('parsing variant m3u8', function() {
         item.get('group-id').should.equal('600k');
         item.get('language').should.equal('eng');
         item.get('name').should.equal('Audio');
-        item.get('autoselect').should.be.true;
-        item.get('default').should.be.true;
+        item.get('autoselect').should.eql(true);
+        item.get('default').should.eql(true);
         item.get('uri').should.equal('hls_600k_audio.m3u8');
         item.get('type').should.equal('AUDIO');
 

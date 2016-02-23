@@ -82,6 +82,19 @@ describe('parser', function() {
     });
   });
 
+  describe('#EXTGRP', function() {
+    it('should create group property on subsequent playlist item', function() {
+      var parser = getParser();
+
+      parser.EXTINF('4.5,some title');
+      parser.EXTGRP('Some Group');
+      parser.currentItem.constructor.name.should.eql('PlaylistItem');
+      parser.currentItem.get('duration').should.eql(4.5);
+      parser.currentItem.get('title').should.eql('some title');
+      parser.currentItem.get('group').should.eql('Some Group');
+    });
+  });
+
   describe('#EXT-X-STREAM-INF', function() {
     it('should create a new Stream item', function() {
       var parser = getParser();
@@ -127,7 +140,5 @@ describe('parser', function() {
 });
 
 function getParser() {
-  var parser = m3u8.createStream();
-
-  return parser;
+  return m3u8.createStream();
 }

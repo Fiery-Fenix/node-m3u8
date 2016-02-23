@@ -9,7 +9,7 @@ describe('m3u', function() {
       var m3u = getM3u();
 
       m3u.set('EXT-X-I-FRAMES-ONLY', true);
-      m3u.properties.iframesOnly.should.be.true;
+      m3u.properties.iframesOnly.should.eql(true);
     });
   });
 
@@ -131,7 +131,7 @@ describe('m3u', function() {
 
       var itemWithDiscontinuity = m3u2.items.PlaylistItem[0];
       m3u1.merge(m3u2);
-      itemWithDiscontinuity.get('discontinuity').should.be.true;
+      itemWithDiscontinuity.get('discontinuity').should.eql(true);
       m3u1.items.PlaylistItem.filter(function(item) {
         return item.get('discontinuity');
       }).length.should.eql(1);
@@ -204,12 +204,25 @@ describe('m3u', function() {
       output.indexOf('#EXT-X-ENDLIST\n').should.eql(-1);
     });
   });
+
+  describe('#toString', function () {
+    it('should return string with group tag', function () {
+      var m3u1 = getM3u();
+
+      m3u1.addPlaylistItem({
+        group: 'Some group',
+        uri: '/path'
+      });
+
+      var output = m3u1.toString();
+      output.indexOf('#EXTGRP:Some group').should.not.eql(-1);
+    });
+  });
+
 });
 
 function getM3u() {
-  var m3u = M3U.create();
-
-  return m3u;
+  return M3U.create();
 }
 
 function getVariantM3U(callback) {

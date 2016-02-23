@@ -34,6 +34,7 @@ describe('parsing playlist m3u8', function() {
       parser.on('m3u', function(m3u) {
         var item = m3u.items.PlaylistItem[0];
         item.get('title').should.equal('');
+        item.get('group').should.equal('Some Group');
         item.get('duration').should.equal(10);
         item.get('byteRange').should.equal('522828@0');
         item.get('uri').should.equal('hls_450k_video.ts');

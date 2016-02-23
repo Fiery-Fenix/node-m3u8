@@ -8,7 +8,7 @@ describe('AttributeList', function() {
       list.mergeAttributes([{ key: 'forced', value: true }]);
 
       list.get('bandwidth').should.eql(1);
-      list.get('forced').should.be.true;
+      list.get('forced').should.eql(true);
     });
   });
 

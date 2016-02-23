@@ -15,7 +15,7 @@ describe('Item', function() {
       var item = new Item;
 
       item.set('autoselect', true);
-      item.attributes.get('autoselect').should.be.true;
+      item.attributes.get('autoselect').should.eql(true);
     });
   });
 
@@ -30,7 +30,7 @@ describe('Item', function() {
       var item = new Item;
 
       item.attributes.set('autoselect', true);
-      item.get('autoselect').should.be.true;
+      item.get('autoselect').should.eql(true);
     });
   });
 
@@ -39,7 +39,7 @@ describe('Item', function() {
       var item = new Item;
       item.setData({ autoselect: true, uri: '/path' });
 
-      item.get('autoselect').should.be.true;
+      item.get('autoselect').should.eql(true);
       item.get('uri').should.eql('/path');
     });
   });

@@ -21,7 +21,7 @@ describe('parsing iframe m3u8', function() {
       m3u.get('targetDuration').should.equal(10);
       m3u.get('playlistType').should.equal('VOD');
       m3u.get('mediaSequence').should.equal(0);
-      m3u.get('iframesOnly').should.be.true;
+      m3u.get('iframesOnly').should.eql(true);
       done();
     });
   });
