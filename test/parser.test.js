@@ -57,6 +57,20 @@ describe('parser', function() {
       parser.currentItem.get('duration').should.eql(4.5);
       parser.currentItem.get('title').should.eql('some title');
     });
+
+    it('should create a new Playlist item with tvg tags', function() {
+      var parser = getParser(),
+          inf = '0 tvg-id="Some id" tvg-name="Some name" tvg-logo="/path/to/logo" group-title="Some group",Some title';
+
+      parser.EXTINF(inf);
+      parser.currentItem.constructor.name.should.eql('PlaylistItem');
+      parser.currentItem.get('duration').should.eql(0);
+      parser.currentItem.get('title').should.eql('Some title');
+      parser.currentItem.get('tvgId').should.eql('Some id');
+      parser.currentItem.get('tvgName').should.eql('Some name');
+      parser.currentItem.get('tvgLogo').should.eql('/path/to/logo');
+      parser.currentItem.get('groupTitle').should.eql('Some group');
+    });
   });
 
   describe('#EXT-X-BYTERANGE', function() {

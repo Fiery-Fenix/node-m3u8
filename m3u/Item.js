@@ -9,7 +9,11 @@ var Item = module.exports = function Item(attributes) {
     duration      : null,
     title         : null,
     uri           : null,
-    group         : null
+    group         : null,
+    tvgId         : null,
+    tvgName       : null,
+    tvgLogo       : null,
+    groupTitle    : null
   };
 };
 

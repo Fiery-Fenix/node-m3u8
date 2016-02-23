@@ -217,6 +217,26 @@ describe('m3u', function() {
       var output = m3u1.toString();
       output.indexOf('#EXTGRP:Some group').should.not.eql(-1);
     });
+
+    it('should return string with tvg tags', function () {
+      var m3u1 = getM3u();
+
+      m3u1.addPlaylistItem({
+        title: 'Some title',
+        uri: '/path',
+        tvgId: 'Some id',
+        tvgName: 'Some name',
+        tvgLogo: '/path/to/logo',
+        groupTitle: 'Some group'
+      });
+
+      var output = m3u1.toString();
+      console.log(output);
+      output.indexOf('tvg-id="Some id"').should.not.eql(-1);
+      output.indexOf('tvg-name="Some name"').should.not.eql(-1);
+      output.indexOf('tvg-logo="/path/to/logo"').should.not.eql(-1);
+      output.indexOf('group-title="Some group"').should.not.eql(-1);
+    })
   });
 
 });

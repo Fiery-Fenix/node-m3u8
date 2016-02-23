@@ -75,8 +75,14 @@ m3uParser.prototype['EXTINF'] = function parseInf(data) {
   this.addItem(new PlaylistItem);
 
   data = data.split(',');
-  this.currentItem.set('duration', parseFloat(data[0]));
-  this.currentItem.set('title', data[1]);
+  // EXTINF has some additional tags, we need to parse them
+  if (data[0].indexOf(' ') !== -1) {
+    this.parseTvgTags(data);
+  } else {
+    this.currentItem.set('duration', parseFloat(data[0]));
+    this.currentItem.set('title', data[1]);
+  }
+
   if (this.playlistDiscontinuity) {
     this.currentItem.set('discontinuity', true);
     this.playlistDiscontinuity = false;
@@ -121,4 +127,25 @@ m3uParser.prototype.parseAttributes = function parseAttributes(data) {
       value : keyValue[1]
     };
   });
+};
+
+m3uParser.prototype.parseTvgTags = function (data) {
+  var map = {
+      tvgId: /tvg-id="(.+?)"/,
+      tvgName: /tvg-name="(.+?)"/,
+      tvgLogo: /tvg-logo="(.+?)"/,
+      groupTitle: /group-title="(.+?)"/
+    },
+    duration = data[0].split(' ')[0];
+
+  Object.keys(map).forEach(function (tag) {
+    var m = data[0].match(map[tag]);
+
+    if (m) {
+      this.currentItem.set(tag, m[1]);
+    }
+  }.bind(this));
+
+  this.currentItem.set('duration', parseFloat(duration));
+  this.currentItem.set('title', data[1]);
 };

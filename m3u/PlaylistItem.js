@@ -26,8 +26,29 @@ PlaylistItem.prototype.toString = function toString() {
     output.push('#EXT-X-PROGRAM-DATE-TIME:' + date);
   }
   if (this.get('duration') != null || this.get('title') != null) {
+    var duration = this.get('duration') || 0,
+        tvgTags = [];
+
+    duration = (duration === -1 || duration === 0) ? duration.toFixed(0) : duration.toFixed(4);
+    if (this.get('tvgId') !== null) {
+      tvgTags.push('tvg-id="' + this.get('tvgId') + '"');
+    }
+    if (this.get('tvgName') !== null) {
+      tvgTags.push('tvg-name="' + this.get('tvgName') + '"');
+    }
+    if (this.get('tvgLogo') !== null) {
+      tvgTags.push('tvg-logo="' + this.get('tvgLogo') + '"');
+    }
+    if (this.get('groupTitle') !== null) {
+      tvgTags.push('group-title="' + this.get('groupTitle') + '"');
+    }
+
+    if (tvgTags.length) {
+      duration = duration + ' ' + tvgTags.join(' ');
+    }
+
     output.push(
-      '#EXTINF:' + [this.get('duration').toFixed(4), this.get('title')].join(',')
+      '#EXTINF:' + [duration, this.get('title')].join(',')
     );
   }
   if (this.get('group') != null) {
